@@ -7,7 +7,7 @@ services:
       mkdir -p stanza_resources
       python -c "import stanza; stanza.Pipeline('en',processors={'tokenize':'spacy'}, dir="stanza_resources")"
       pip install -r requirements.txt
-    startCommand: gunicorn main:app --bind=0.0.0.0:$PORT
+    startCommand: gunicorn main:app --bind=0.0.0.0:5000
     envVars:
       - key: FLASK_ENV
         value: production
