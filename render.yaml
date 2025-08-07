@@ -1,9 +1,10 @@
 services:
-  - type: service
-    name: text2sign
+  - type: web
+    name: your-flask-app
     env: python
-    buildCommand: |
-      pip install -r requirements.txt
-      pip install torch==2.3.0+cpu torchvision==0.18.0+cpu torchaudio==2.3.0+cpu -f https://download.pytorch.org/whl/torch_stable.html
-    startCommand: python main.py
-    runtime: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn app:app
+    envVars:
+      - key: FLASK_ENV
+        value: production
