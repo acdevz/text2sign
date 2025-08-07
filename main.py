@@ -18,6 +18,7 @@ import zipfile
 import sys
 import time
 import ssl
+import spacy
 ssl._create_default_https_context = ssl._create_unverified_context
 
 from flask import Flask,request,render_template,send_from_directory,jsonify
@@ -34,8 +35,8 @@ os.environ['NLTK_DATA'] = os.path.join(BASE_DIR, 'nltk_data')
 
 """ Pipeline  """
 
-# Pipeline for stanza (calls spacy for tokenizer)
-en_nlp = stanza.Pipeline('en',processors={'tokenize':'spacy'})	
+# Only load tokenizer
+en_nlp = stanza.Pipeline('en',processors={'tokenize':'spacy'}, dir="stanza_resources")	
 # print(stopwords.words('english'))
 
 # stop words that are not to be included in ISL
