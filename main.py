@@ -295,36 +295,27 @@ def clear_all():
 # dict for sending data to front end in json
 final_words_dict = {};
 
-@app.route('/',methods=['GET'])
+@app.route('/', methods=['GET', 'POST'])
 def index():
-	clear_all();
-	return render_template('index.html')
+    clear_all()
+    if request.method == 'POST':
+        text = request.form.get('text')
+        if not text:
+            return ""
+        take_input(text)
 
+        for words in final_output_in_sent:
+            for i, word in enumerate(words, start=1):
+                final_words_dict[i] = word.lower()
 
-@app.route('/',methods=['GET','POST'])
-def flask_test():
-	clear_all();
-	text = request.form.get('text') #gets the text data from input field of front end
-	print("text is", text)
-	if(text==""):
-		return "";
-	take_input(text)
+        for key in final_words_dict.keys():
+            if len(final_words_dict[key]) == 1:
+                final_words_dict[key] = final_words_dict[key].upper()
 
-	# fills the json 
-	for words in final_output_in_sent:
-		for i,word in enumerate(words,start=1):
-			final_words_dict[i]=word;
+        return final_words_dict
+    else:
+        return render_template('index.html')
 
-	print("---------------Final words dict--------------");
-
-	for key in final_words_dict.keys():
-		if len(final_words_dict[key])==1:
-			final_words_dict[key]=final_words_dict[key].upper()
-	print(final_words_dict)
-
-	print(final_words_dict)
-
-	return final_words_dict;
 
 
 # serve sigml files for animation
@@ -333,6 +324,3 @@ def serve_signfiles(path):
 	print("here");
 	return send_from_directory('static',path)
 
-
-if __name__=="__main__":
-    app.run(host='0.0.0.0')
