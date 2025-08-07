@@ -36,7 +36,7 @@ os.environ['NLTK_DATA'] = os.path.join(BASE_DIR, 'nltk_data')
 """ Pipeline  """
 
 # Only load tokenizer
-en_nlp = stanza.Pipeline('en',processors={'tokenize':'spacy'}, dir="stanza_resources")	
+en_nlp = stanza.Pipeline('en',processors={'tokenize':'spacy'})	
 # print(stopwords.words('english'))
 
 # stop words that are not to be included in ISL
@@ -325,3 +325,5 @@ def serve_signfiles(path):
 	print("here");
 	return send_from_directory('static',path)
 
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=5000)
