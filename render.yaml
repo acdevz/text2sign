@@ -1,0 +1,9 @@
+services:
+  - type: service
+    name: text2sign
+    env: python
+    buildCommand: |
+      pip install -r requirements.txt
+      pip install torch==2.3.0+cpu -f https://download.pytorch.org/whl/torch_stable.html
+    startCommand: python app.py
+    runtime: python
